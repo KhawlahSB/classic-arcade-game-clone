@@ -28,10 +28,11 @@ Enemy.prototype.update = function(dt) {
     var bugYTopRange = this.y - 50;
     var bugYBottomRange = this.y + 50;
 
-    if (player.x > bugXLeftRange && player.x < bugXRightRange && player.y > bugYTopRange && player.y < bugYBottomRange) {
+    if (player.x > bugXLeftRange && player.x < bugXRightRange &&
+        player.y > bugYTopRange && player.y < bugYBottomRange) {
         player.resetPlayerPosition();
     }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -40,7 +41,7 @@ Enemy.prototype.render = function() {
 Enemy.prototype.randomSpeed = function() {
     var speedMultiply = Math.floor(Math.random() * 5 + 1);
     this.speed = 75 * speedMultiply;
-}
+};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -61,23 +62,23 @@ var Player = function() {
         bottomWall: true
     };
     this.sprite = 'images/char-boy.png';
-}
+};
 
 // Player class instance methods ✓ (EMPTY)
 Player.prototype.update = function() {
 
-}
+};
 
 // Draw the player on the screen, required method for game ✓
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-
+};
+// to reset player position when he clash the bug 
 Player.prototype.resetPlayerPosition = function() {
     this.x = playerInitialX;
     this.y = playerInitialY;
     this.resetCheckPosition();
-}
+};
 
 Player.prototype.handleInput = function(keyPressed) {
     // Key press listener, 'left', 'up', 'right', 'down' ✓
@@ -97,6 +98,7 @@ Player.prototype.handleInput = function(keyPressed) {
         this.x += stepHorizontalLength;
     } else if (keyPressed === 'up') {
         if (this.y === 40) {
+            alert("You win!");
             this.resetPlayerPosition();
             return null;
         }
@@ -111,7 +113,7 @@ Player.prototype.handleInput = function(keyPressed) {
         return null;
     }
 }
-
+//to control player movment by key preesed
 Player.prototype.checkPosition = function() {
     if (this.x === 0) {
         this.setHorizontalWallCheckerState(true, false);
@@ -125,13 +127,13 @@ Player.prototype.checkPosition = function() {
     } else {
         this.wallChecker.bottomWall = false;
     }
-}
-
+};
+// to reset player position when he clash the bug 
 Player.prototype.resetCheckPosition = function() {
     this.setHorizontalWallCheckerState(false, false);
     this.wallChecker.bottomWall = true;
-}
-
+};
+// to make player don't go away the border 
 Player.prototype.setHorizontalWallCheckerState = function(leftWallState, rightWallState) {
     this.wallChecker.leftWall = leftWallState;
     this.wallChecker.rightWall = rightWallState;
